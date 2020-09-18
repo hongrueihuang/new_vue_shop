@@ -14,6 +14,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/backend/Login.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Dashboard',
+    component: () => import('../views/backend/Dashboard.vue')
   }
   // {
   //   path: '/about',
