@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-      <form class="form-signin">
+      <form class="form-signin" @submit.prevent="login">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input
@@ -9,6 +9,7 @@
           id="inputEmail"
           class="form-control"
           placeholder="Email address"
+          v-model="form.username"
           required
           autofocus
         />
@@ -18,8 +19,10 @@
           id="inputPassword"
           class="form-control"
           placeholder="Password"
+          v-model="form.password"
           required
         />
+        <span class="text-danger" v-if="message">{{ message }}，請重新登入</span>
         <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me" /> Remember me
@@ -33,7 +36,34 @@
 </template>
 
 <script>
-export default {};
+export default {
+    name: 'Login',
+    data() {
+        return {
+            form: {
+                username: '',
+                password: ''
+            },
+            message: ''
+        }
+    },
+    methods: {
+        login() {
+            const vm = this;
+            const api = `${process.env.VUE_APP_APIPATH}admin/signin`;
+            let data = vm.form;
+            vm.$http.post(api,data).then((response) => {
+                if(response.data.success) {
+                    vm.$router.push('/admin/products');
+                } else {
+                    vm.message = response.data.message;
+                    vm.form.username = '';
+                    vm.form.password = '';
+                }
+            })
+        }
+    }
+};
 </script>
 
 <style lang="scss" scoped>

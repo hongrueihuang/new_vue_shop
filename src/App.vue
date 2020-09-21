@@ -7,7 +7,7 @@
 <style lang="scss">
 @import './assets/all.scss';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif, 'Microsoft JhengHei';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -37,8 +37,5 @@
 <script>
 export default {
   name: 'Home',
-  created() {
-    console.log(process.env.VUE_APP_APIPATH,process.env.VUE_APP_CUSTOMPATH)
-  }
 }
 </script>
