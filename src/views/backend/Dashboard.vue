@@ -1,30 +1,30 @@
 <template>
-  <div>
+<div>
     <DashboardNav />
 
     <div class="container-fluid">
-      <div class="row">
-        <DashboardSidebar />
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-          <router-view></router-view>
-        </main>
-      </div>
+        <div class="row">
+            <DashboardSidebar />
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <router-view></router-view>
+            </main>
+        </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
-import DashboardNav from '../../components/dashboardNav';
-import DashboardSidebar from '../../components/dashboardSidebar';
+import DashboardNav from "../../components/back/dashboardNav";
+import DashboardSidebar from "../../components//back/dashboardSidebar";
 export default {
     data() {
         return {
-            current: ''
-        }
+            current: "",
+        };
     },
     components: {
         DashboardNav,
-        DashboardSidebar
+        DashboardSidebar,
     },
 };
 </script>
