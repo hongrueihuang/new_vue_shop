@@ -1,16 +1,16 @@
 <template>
 <div>
     <div class="cart-btn-wrap d-lg-none">
-        <h5><span class="badge badge-danger cart-badge" v-if="carts.length >= 1">{{ carts.length }}</span></h5>
+        <h5><span class="badge badge-danger cart-badge" v-if="cartsNum > 0">{{ carts.length }}</span></h5>
         <router-link to="cart">
-            <button class="cart-btn">
+            <button class="cart-btn btn-secondary">
                 <i class="fas fa-shopping-cart"></i>
             </button>
         </router-link>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container py-3">
+            <router-link to="/" class="navbar-brand"><img src="../../assets/images/logo.png" class="img-fluid" alt="logo icon"><h1 class="text-hide">宅宅傢俱 | 首頁</h1></router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,11 +34,11 @@
                 <button class="btn-cart dropdown-toggle" data-toggle="dropdown">
                     <i class="fas fa-shopping-cart"></i>
                 </button>
-                <span class="badge badge-danger cart-badge" v-if="carts.length >= 1">{{ carts.length }}</span>
+                <span class="badge badge-danger cart-badge" v-if="cartsNum > 0">{{ carts.length }}</span>
                 <div class="dropdown-menu dropdown-menu-right pb-0">
-                    <h5 class="text-center bg-info cart-title text-white">Cart Content</h5>
-                    <div class="d-flex justify-content-center" v-if="carts.length === 0">
-                        <button class="btn btn-info mt-3 rounded-0 mx-auto">還沒購物喔！先去逛逛吧！</button>
+                    <h5 class="text-center bg-dark cart-title text-white">Cart Content</h5>
+                    <div class="text-center">
+                        <router-link to="/products" class="btn btn-dark mt-3 rounded-0" :class="{'d-none': cartsNum > 0}">還沒購物喔！先去逛逛吧！</router-link>
                     </div>
                     <table class="table table-responsive" style="min-width: 340px;">
                         <tbody>
@@ -54,7 +54,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <router-link to="cart" class="btn btn-block btn-info btn-lg">查看購物車</router-link>
+                    <router-link to="cart" class="btn btn-block btn-dark btn-lg" :class="{'d-none' : cartsNum === 0}">查看購物車</router-link>
                 </div>
             </div>
 
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 export default {
     data() {
         return {
@@ -100,44 +101,42 @@ export default {
         },
         delCart(id) {
             this.$store.dispatch('removeCart', id);
-            // const vm = this;
-
-            // const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/cart/${this.tempCart.id}`;
-            // vm.$http.delete(api).then((response) => {
-            //     if (response.data.success) {
-            //         vm.updateCart();
-            //         vm.tempCart = {};
-            //         $('#delModal').modal('hide');
-            //         vm.$bus.$emit('message:push', response.data.message, 'success')
-            //     } else {
-            //         vm.updateCart();
-            //         vm.tempCart = {};
-            //         $('#delModal').modal('hide');
-            //         vm.$bus.$emit('message:push', response.data.message, 'warning')
-            //     }
-            // })
             $('#delModal').modal('hide');
             this.$bus.$emit('message:push', '已從購物車刪除商品', 'success')
         },
     },
     computed: {
-        // currentPage() {
-        //     return this.$route.name;
-        // },
         carts() {
-            return this.$store.state.carts;
-        }
+            return this.$store.state.carts.carts;
+        },
+        cartsNum() {
+            return this.$store.state.carts.final_total;
+        },
     },
     created() {
         this.updateCart();
         this.$bus.$on('updateCart', () => {
             this.updateCart();
-        })
+        });
     }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+// .navbar-brand {
+//     img {
+//         display: inline-block;
+//         width: 240px;
+//         height: 135px;
+//     }
+// }
+
+// @media (max-width: 768px) {
+//     .navbar-brand {
+
+//     }
+// }
+
 .cart-btn-wrap {
     position: fixed;
     bottom: 50px;
@@ -165,7 +164,7 @@ export default {
 
     .btn-cart.dropdown-toggle {
         background-color: transparent;
-        color: #fff;
+        color: #000;
         border: none;
 
         &::after {

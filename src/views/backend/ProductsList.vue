@@ -165,7 +165,7 @@ export default {
     data() {
         return {
             isLoading: false,
-            products: {},
+            products: [],
             tempProduct: {},
             isNew: true,
             status: {
@@ -176,10 +176,11 @@ export default {
     methods: {
         getProducts(page = 1) {
             const vm = this;
-            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
+            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
             vm.isLoading = true;
+            console.log(api)
             vm.$http.get(api).then((response) => {
-                // console.log(response.data);
+                console.log(response.data);
                 vm.products = response.data.products;
                 vm.isLoading = false;
             });

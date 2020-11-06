@@ -39,6 +39,16 @@ const routes = [
         path:'cart',
         name: 'Cart',
         component: () => import('../views/frontend/Cart')
+      },
+      {
+        path:'order',
+        name: 'Order',
+        component: () => import('../views/frontend/Order'),
+      },
+      {
+        path: 'completed',
+        name: 'Completed',
+        component: () => import('../views/frontend/Completed')
       }
     ]
   },

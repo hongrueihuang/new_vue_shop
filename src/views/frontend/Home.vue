@@ -1,5 +1,6 @@
 <template>
 <div class="home">
+    <button class="gotop btn-secondary" @click="goTop"><i class="fas fa-arrow-up"></i></button>
     <Alert />
     <Navbar />
     <router-view></router-view>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import Navbar from "../../components/front/navbar";
 import Footer from "../../components/front/footer";
 import Alert from "../../components/front/alert";
@@ -17,6 +19,11 @@ export default {
         Navbar,
         Footer,
         Alert,
+    },
+    methods: {
+        goTop() {
+            window.scrollTo(0, 0);
+        }
     }
 };
 </script>
@@ -32,5 +39,24 @@ export default {
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.home {
+    position: relative;
+
+    button.gotop {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        right: 40px;
+        bottom: 120px;
+        z-index: 1000;
+        border-radius: 50%;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
 }
 </style>
